@@ -100,3 +100,33 @@ const people = [
   { fName: "Gabriel", lName: "Dicki" },
   { fName: "Obie", lName: "Hayes" },
 ];
+
+const searchBar = document.querySelector("#searchbar");
+const results = document.querySelector("#results");
+
+const sleep = async (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+// Filter search results whenever value changes
+searchBar.addEventListener("input", async (e) => {
+  const searchValue = e.target.value.trim().toLowerCase();
+
+  if (searchValue) {
+    await sleep(250);
+  }
+
+  const filteredResults = people
+    .map((person) => `${person.fName} ${person.lName}`)
+    .filter((fullName) => {
+      return fullName.toLowerCase().includes(searchValue);
+    })
+    .sort();
+
+  results.innerHTML = filteredResults.join("<br>");
+});
+
+results.innerHTML = people
+  .map((person) => `${person.fName} ${person.lName}`)
+  .sort()
+  .join("<br>");
